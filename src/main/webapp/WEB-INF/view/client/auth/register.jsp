@@ -45,7 +45,7 @@
                                 <c:set var="errorUserName">
                                     <form:errors path="user_name" cssClass="invalid-feedback" />
                                 </c:set>
-                                <h1>Create Account</h1>
+                                <h1>Tạo tài khoản</h1>
                                 <!-- <div class="social-icons">
                                 <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
                                 <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
@@ -61,17 +61,20 @@
                                 ${phone_number}
                                 <form:input type="password" placeholder="Password" path="password" />
                                 ${errorPassword}
-                                <form:input type="password" placeholder="confirmPassword" path="confirmPassword" />
+                                <form:input type="password" placeholder="ConfirmPassword" path="confirmPassword" />
                                 ${errorConfirmPassword}
-                                <button type="submit">Sign Up</button>
+                                <button type="submit">Đăng kí</button>
+
                             </form:form>
-                        </div>z
+
+                        </div>
                         <div class="toggle-container">
                             <div class="toggle">
                                 <div class="toggle-panel toggle-left">
                                     <h1>Welcome Back!</h1>
-                                    <p>Enter your personal details to use all of site features</p>
-                                    <a href="/login"><button class="hidden" id="login1">Log In</button></a>
+
+                                    <a href="/login"><button class="hidden" id="login1">Đăng nhập</button></a>
+                                    <a href="/home"><button class="hidden" id="login1">Trang chủ</button></a>
                                 </div>
 
                             </div>

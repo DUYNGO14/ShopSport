@@ -1,7 +1,5 @@
 package com.duyngostore.shopsport.controller.client;
 
-import java.net.http.HttpRequest;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -11,12 +9,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
+
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.duyngostore.shopsport.domain.Cart;
@@ -25,31 +22,23 @@ import com.duyngostore.shopsport.domain.Product;
 import com.duyngostore.shopsport.domain.Product_;
 import com.duyngostore.shopsport.domain.User;
 import com.duyngostore.shopsport.domain.dto.ProductCriterioDTO;
-import com.duyngostore.shopsport.domain.dto.RegisterDTO;
-import com.duyngostore.shopsport.domain.mapper.MapperRegister;
+
 import com.duyngostore.shopsport.service.ProductService;
 import com.duyngostore.shopsport.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
-
-import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class UserController {
 
     private final UserService userService;
     private final ProductService productService;
-    private final MapperRegister mapperRegister;
-    private final PasswordEncoder passwordEncoder;
 
-    public UserController(UserService userService, ProductService productService, MapperRegister mapperRegister,
-            PasswordEncoder passwordEncoder) {
+    public UserController(UserService userService, ProductService productService) {
         this.userService = userService;
         this.productService = productService;
-        this.mapperRegister = mapperRegister;
-        this.passwordEncoder = passwordEncoder;
+
     }
 
     @GetMapping("/")
@@ -146,43 +135,12 @@ public class UserController {
         return "client/products/sproduct";
     }
 
-    @GetMapping("/login")
-    public String getLoginPage(Model model) {
-        model.addAttribute("newUser", new User());
-        return "client/auth/login";
-    }
-
-    @GetMapping("/register")
-    public String getRegisterPage(Model model) {
-        model.addAttribute("newUser", new RegisterDTO());
-        return "client/auth/register";
-    }
-
-    @PostMapping("/register")
-    public String postRegisterUser(@ModelAttribute("newUser") @Valid RegisterDTO newUser,
-            BindingResult newUserBindingResult) {
-        if (newUserBindingResult.hasErrors()) {
-            return "client/auth/register";
-        }
-        User user = this.mapperRegister.registerDTOtoUser(newUser);
-        String hashPassword = this.passwordEncoder.encode(user.getPassword());
-        user.setPassword(hashPassword);
-        user.setRole(this.userService.getRoleByName("User"));
-        user.setCreatedAt(Instant.now());
-        this.userService.handleSaveUser(user);
-        return "redirect:/login";
-    }
-
-    @GetMapping("/access-deny")
-    public String getPage404(Model model) {
-        return "/client/auth/error404";
-    }
-
-    @GetMapping("/search")
-    public String getProductbyKeySearch(Model model, @Param("keySearch") String keySearch) {
-        List<Product> listproduct = this.productService.searchProduct(keySearch);
-        model.addAttribute("keySearch", keySearch);
-        model.addAttribute("lstProduct", listproduct);
-        return "redirect:/shop";
-    }
+    // @GetMapping("/search")
+    // public String getProductbyKeySearch(Model model, @Param("keySearch") String
+    // keySearch) {
+    // List<Product> listproduct = this.productService.searchProduct(keySearch);
+    // model.addAttribute("keySearch", keySearch);
+    // model.addAttribute("lstProduct", listproduct);
+    // return "redirect:/shop";
+    // }
 }

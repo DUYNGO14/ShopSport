@@ -20,6 +20,7 @@ import com.duyngostore.shopsport.domain.User;
 import com.duyngostore.shopsport.domain.dto.OrderDTO;
 import com.duyngostore.shopsport.domain.mapper.MapperOrder;
 import com.duyngostore.shopsport.domain.mapper.MapperRegister;
+import com.duyngostore.shopsport.service.EmailService;
 import com.duyngostore.shopsport.service.OrderService;
 import com.duyngostore.shopsport.service.ProductService;
 import com.duyngostore.shopsport.service.UserService;
@@ -30,28 +31,29 @@ import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class IteamController {
+public class CartController {
     private final UserService userService;
     private final ProductService productService;
     private final MapperRegister mapperRegister;
     private final PasswordEncoder passwordEncoder;
     private final MapperOrder mapperOrder;
     private final OrderService orderService;
+    private final EmailService emailService;
 
-    public IteamController(UserService userService, ProductService productService, MapperRegister mapperRegister,
+    public CartController(UserService userService, ProductService productService, MapperRegister mapperRegister,
             MapperOrder mapperOrder,
-            PasswordEncoder passwordEncoder, OrderService orderService) {
+            PasswordEncoder passwordEncoder, OrderService orderService, EmailService emailService) {
         this.userService = userService;
         this.productService = productService;
         this.mapperRegister = mapperRegister;
         this.passwordEncoder = passwordEncoder;
         this.mapperOrder = mapperOrder;
         this.orderService = orderService;
+        this.emailService = emailService;
     }
 
     @PostMapping("/cart/{id}")
     public String addProductToCart(@PathVariable long id, HttpServletRequest request) {
-        // TODO: process POST request
         HttpSession session = request.getSession();
         long productId = id;
         String email = (String) session.getAttribute("email");
@@ -113,11 +115,16 @@ public class IteamController {
         HttpSession session = request.getSession(false);
         long id = (long) session.getAttribute("id");
         Order order = this.mapperOrder.orderDTOtoOrder(newOrder);
-
+        String fullname = (String) session.getAttribute("fullName");
+        String email = (String) session.getAttribute("email");
         currentUser.setId(id);
 
         this.productService.handlePlaceOrder(currentUser, session, order);
-
+        String subject = "Thư cảm ơn từ shopsport";
+        String content = "<h3>Cảm ơn bạn" + fullname + " đã tin tưởng đặt hàng Shop sport!</h3>7\n"
+                + "<h4>Đơn hàng sẽ được giao đến bạn sớm nhất có thể </h4>/n"
+                + "<strong>Cảm ơn!</strong>";
+        this.emailService.sendEmailSync(email, subject, content, false, true);
         return "client/carts/thank";
     }
 

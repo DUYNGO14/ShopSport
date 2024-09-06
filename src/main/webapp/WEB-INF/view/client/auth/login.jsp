@@ -23,7 +23,7 @@
 
                     <div class="form-container sign-in">
                         <form method="post" action="/login" class="row">
-                            <h1>Sign In</h1>
+                            <h1>Đăng nhập</h1>
                             <div class="social-icons">
                                 <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
                                 <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
@@ -31,7 +31,11 @@
                             <span>or</span>
                             <input type="text" placeholder="Username" name="username" />
                             <input type="password" placeholder="Password" name="password" />
-                            <!-- <span><input type="checkbox" name="remember-me">Remember-me</span> -->
+                            <!-- <div style="display: block;">
+                                <input type="checkbox" name="remember-me">
+                                <label>Remember-me</label>
+                            </div> -->
+
                             <c:if test="${param.error != null}">
                                 <div style="color: red; font-size: 12px; ">Invalid username or password.
                                 </div>
@@ -43,7 +47,7 @@
 
                             <a href="#">Forget Your Password?</a>
 
-                            <button type="submit">Login</button>
+                            <button type="submit">Đăng nhập</button>
                             <div>
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                             </div>
@@ -53,8 +57,9 @@
                         <div class="toggle">
                             <div class="toggle-panel toggle-right">
                                 <h1>Hello, Friend!</h1>
-                                <p>Register with your personal details to use all of site features</p>
-                                <a href="/register"><button class="hidden" id="register1">Sign Up</button></a>
+
+                                <a href="/register"><button class="hidden" id="register1">Đăng kí</button></a>
+                                <a href="/home"><button class="hidden" id="login1">Trang chủ</button></a>
                             </div>
                         </div>
                     </div>
