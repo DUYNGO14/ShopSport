@@ -178,12 +178,11 @@ public class UserController {
         return "/client/auth/error404";
     }
 
-    // @GetMapping("/search")
-    // public String getProductbyKeySearch(Model model, @Param("keySearch") String
-    // keySearch) {
-    // List<Product> listproduct = this.productService.searchProduct(keySearch);
-    // model.addAttribute("keySearch", keySearch);
-    // model.addAttribute("lstProduct", listproduct);
-    // return "redirect:/shop";
-    // }
+    @GetMapping("/search")
+    public String getProductbyKeySearch(Model model, @Param("keySearch") String keySearch) {
+        List<Product> listproduct = this.productService.searchProduct(keySearch);
+        model.addAttribute("keySearch", keySearch);
+        model.addAttribute("lstProduct", listproduct);
+        return "redirect:/shop";
+    }
 }
