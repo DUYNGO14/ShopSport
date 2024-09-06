@@ -44,7 +44,7 @@ public class Product {
     @DecimalMin(value = "0", inclusive = false, message = "Price phải lớn hơn 0")
     private double price;
     private long discount;
-    private long deleted;
+    private boolean deleted;
     private String listImage;// ảnh mô tả sản phẩm
     @NotNull
     @NotEmpty(message = "Chất liệu sản phẩm không được để trống")
@@ -59,7 +59,7 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
-    // mlh với danh sách ảnh sản phẩm
+
     @OneToMany(mappedBy = "product")
     private List<Size> sizes;
     // feedback
@@ -71,4 +71,5 @@ public class Product {
 
     @OneToMany(mappedBy = "product")
     private List<CartDetail> lstCartDetail;
+
 }

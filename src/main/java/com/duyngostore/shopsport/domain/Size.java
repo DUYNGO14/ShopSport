@@ -1,6 +1,10 @@
 package com.duyngostore.shopsport.domain;
 
+import com.duyngostore.shopsport.domain.constant.SizeProductEnum;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -18,7 +22,8 @@ public class Size {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @NotNull
-    private String size;
+    @Enumerated(EnumType.STRING)
+    private SizeProductEnum size;
     private long quantity;
     @ManyToOne
     @JoinColumn(name = "product_id")

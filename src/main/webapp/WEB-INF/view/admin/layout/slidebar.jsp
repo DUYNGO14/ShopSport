@@ -44,6 +44,20 @@
                             </li>
                         </ul>
                     </li>
+
+                    <li class="sidebar-item">
+                        <a href="#" class="sidebar-link collapsed" data-bs-target="#category" data-bs-toggle="collapse"
+                            aria-expanded="false"><i class="fa-brands fa-product-hunt"></i></i>
+                            Category
+                        </a>
+                        <ul id="category" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                            <li class="sidebar-item">
+                                <a href="/admin/category" class="sidebar-link">Show Category</a>
+                            <li class="sidebar-item">
+                                <a href="/admin/create/category" class="sidebar-link">Create Category</a>
+                            </li>
+                        </ul>
+                    </li>
                     <li class="sidebar-item">
                         <a href="#" class="sidebar-link collapsed" data-bs-target="#auth" data-bs-toggle="collapse"
                             aria-expanded="false"><i class="fa-solid fa-truck-fast"></i></i>

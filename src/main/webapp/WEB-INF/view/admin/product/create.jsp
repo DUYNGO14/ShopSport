@@ -145,7 +145,6 @@
                                                         <label for="inputState" class="form-label">Category:</label>
                                                         <form:select id="inputState" class="form-select"
                                                             path="category.name">
-                                                            <option value="select">Select :</option>
                                                             <c:forEach items="${lstCategory}" var="category">
                                                                 <form:option value="${category.name}">${category.name}
                                                                 </form:option>

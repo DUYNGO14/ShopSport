@@ -1,5 +1,6 @@
 package com.duyngostore.shopsport.domain;
 
+import java.time.Instant;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -18,11 +19,15 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @NotNull
+    @NotNull(message = "name không được để trống")
     private String name;
-    @NotNull
+    @NotNull(message = "description không được để trống")
     private String description;
-    private int deleted;
+    private boolean deleted;
+    Instant createdAt;
+    Instant updatedAt;
+    String createdBy;
+    String updatedBy;
     @OneToMany(mappedBy = "category")
     private List<Product> products;
 

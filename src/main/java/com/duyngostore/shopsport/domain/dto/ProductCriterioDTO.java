@@ -13,4 +13,5 @@ public class ProductCriterioDTO {
     private Optional<List<String>> category;
     private Optional<List<String>> factory;
     private Optional<String> sort;
+    private Optional<String> keySearch;
 }

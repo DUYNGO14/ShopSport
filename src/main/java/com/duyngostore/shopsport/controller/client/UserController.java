@@ -52,7 +52,10 @@ public class UserController {
 
     @GetMapping("/home")
     public String getHomePage1(Model model) {
-        model.addAttribute("lstProduct", this.productService.getAllProduct());
+        Pageable pageable = PageRequest.of(0, 12);
+        Page<Product> prs = this.productService.getAllProduct(pageable);
+        List<Product> lstProduct = prs.getContent();
+        model.addAttribute("lstProduct", lstProduct);
         return "client/homepage/homepage";
     }
 
@@ -79,7 +82,8 @@ public class UserController {
         }
 
         String key = keySearch.isEmpty() ? "" : keySearch.get();
-        Page<Product> prs = this.productService.fetchProductsWithSpec(pageable, productCriterioDTO);
+        Page<Product> prs = key == null ? this.productService.fetchProductsWithSpec(pageable, productCriterioDTO)
+                : this.productService.getAllProduct(pageable, key);
         List<Product> lstProduct = prs.getContent().size() > 0 ? prs.getContent() : new ArrayList<Product>();
         String qs = request.getQueryString();
         if (qs != null && !qs.isBlank()) {

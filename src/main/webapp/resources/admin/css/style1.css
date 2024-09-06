@@ -94,6 +94,7 @@ a.sidebar-link {
     border-width: 0 .075rem .075rem 0;
     content: "";
     display: inline-block;
+    margin-left: 10px;
     padding: 2px;
     position: absolute;
     right: 1.5rem;

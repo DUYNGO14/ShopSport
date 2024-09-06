@@ -27,9 +27,9 @@ public interface ProductService {
 
     public void deleteProductById(long id);
 
-    public Category getCategoryByName(String name);
+    // public Category getCategoryByName(String name);
 
-    public List<Category> getAllCategory();
+    // public List<Category> getAllCategory();
 
     public Cart getCartByUser(User user);
 

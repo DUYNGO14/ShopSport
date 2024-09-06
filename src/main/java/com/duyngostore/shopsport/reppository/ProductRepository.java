@@ -18,6 +18,8 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
 
     Page<Product> findAll(Pageable pageable);
 
+    Page<Product> findAllByDeleted(Pageable pageable, boolean isdelete);
+
     Page<Product> findAll(Specification<Product> spec, Pageable pageable);
     // Optional<Product> findById(long id);
 

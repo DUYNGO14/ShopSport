@@ -76,15 +76,15 @@ public class ProductServiceImpl implements ProductService {
         this.productRepository.deleteById(id);
     }
 
-    @Override
-    public Category getCategoryByName(String name) {
-        return this.categoryRepository.findByName(name);
-    }
+    // @Override
+    // public Category getCategoryByName(String name) {
+    // return this.categoryRepository.findByName(name);
+    // }
 
-    @Override
-    public List<Category> getAllCategory() {
-        return this.categoryRepository.findAll();
-    }
+    // @Override
+    // public List<Category> getAllCategory() {
+    // return this.categoryRepository.findAll();
+    // }
 
     @Override
     public Cart getCartByUser(User user) {
@@ -236,7 +236,7 @@ public class ProductServiceImpl implements ProductService {
     public Page<Product> fetchProductsWithSpec(Pageable page, ProductCriterioDTO productCriteriaDTO) {
         Specification<Product> combinedSpec = Specification.where(null);
         if (productCriteriaDTO.getFactory() == null &&
-                productCriteriaDTO.getCategory() == null) {
+                productCriteriaDTO.getCategory() == null && productCriteriaDTO.getKeySearch() == null) {
             return this.productRepository.findAll(page);
         }
         if (productCriteriaDTO.getFactory() != null && productCriteriaDTO.getFactory().isPresent()) {
@@ -247,6 +247,10 @@ public class ProductServiceImpl implements ProductService {
         if (productCriteriaDTO.getCategory() != null && productCriteriaDTO.getCategory().isPresent()) {
             Specification<Product> currentSpec = ProductSpecification
                     .findProductByCategory(productCriteriaDTO.getCategory().get());
+            combinedSpec = combinedSpec.and(currentSpec);
+        }
+        if (productCriteriaDTO.getKeySearch() != null && productCriteriaDTO.getKeySearch().isPresent()) {
+            Specification<Product> currentSpec = ProductSpecification.nameLike(productCriteriaDTO.getKeySearch().get());
             combinedSpec = combinedSpec.and(currentSpec);
         }
         return this.productRepository.findAll(combinedSpec, page);

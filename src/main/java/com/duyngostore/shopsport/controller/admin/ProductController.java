@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.duyngostore.shopsport.domain.Product;
+import com.duyngostore.shopsport.service.CategoryService;
 import com.duyngostore.shopsport.service.ProductService;
 import com.duyngostore.shopsport.service.UploadService;
 
@@ -30,10 +31,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class ProductController {
     private final ProductService productService;
     private final UploadService uploadService;
+    private final CategoryService categoryService;
 
-    public ProductController(ProductService productService, UploadService uploadService) {
+    public ProductController(ProductService productService, UploadService uploadService,
+            CategoryService categoryService) {
         this.productService = productService;
         this.uploadService = uploadService;
+        this.categoryService = categoryService;
     }
 
     @GetMapping("/admin/product")
@@ -60,25 +64,26 @@ public class ProductController {
     @GetMapping("/admin/product/create")
     public String getCreatePage(Model model) {
         model.addAttribute("newProduct", new Product());
-        model.addAttribute("lstCategory", this.productService.getAllCategory());
+        model.addAttribute("lstCategory", this.categoryService.getAllByDelete(false));
         return "admin/product/create";
     }
 
     @PostMapping("/admin/product/create")
     public String postMethodName(@ModelAttribute("newProduct") @Valid Product newProduct,
-            BindingResult newUserBindingResult, @RequestParam("avatarProduct") MultipartFile file,
+            BindingResult newProductBindingResult, @RequestParam("avatarProduct") MultipartFile file,
             @RequestParam("listImageProduct") MultipartFile[] listFiles, Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
         // TODO: process POST request
-        if (newUserBindingResult.hasErrors()) {
-            model.addAttribute("lstCategory", this.productService.getAllCategory());
+        if (newProductBindingResult.hasErrors()) {
+            model.addAttribute("lstCategory", this.categoryService.getAllByDelete(false));
             return "admin/product/create";
         }
         String avatar = this.uploadService.handleSaveUploadFile(file, "product");
         String listImage = this.uploadService.handleSaveUploadListFile(listFiles, "product");
-        newProduct.setCategory(this.productService.getCategoryByName(newProduct.getCategory().getName()));
+        newProduct.setCategory(this.categoryService.findCategoryByName(newProduct.getCategory().getName()));
         newProduct.setImage(avatar);
         newProduct.setListImage(listImage);
+        newProduct.setDeleted(false);
         newProduct.setCreatedBy((String) session.getAttribute("username"));
         newProduct.setCreatedAt(Instant.now());
         this.productService.handleSaveProduct(newProduct);
@@ -86,7 +91,7 @@ public class ProductController {
     }
 
     @GetMapping("/admin/product/{id}")
-    public String getMethodName(Model model, @PathVariable long id) {
+    public String getProductById(Model model, @PathVariable long id) {
         Product product = this.productService.getProductById(id).get();
         String lstimage[] = product.getListImage().split(";");
         model.addAttribute("listimage", lstimage);
@@ -100,7 +105,7 @@ public class ProductController {
     public String getUpdateProductPage(Model model, @PathVariable long id) {
         Product currentProduct = this.productService.getProductById(id).get();
         model.addAttribute("newProduct", currentProduct);
-        model.addAttribute("lstCategory", this.productService.getAllCategory());
+        model.addAttribute("lstCategory", this.categoryService.getAllByDelete(false));
         model.addAttribute("id", id);
         return "admin/product/update";
     }
@@ -112,6 +117,10 @@ public class ProductController {
             @RequestParam("listImageProduct") MultipartFile[] files,
             HttpServletRequest request) {
         HttpSession session = request.getSession();
+        if (newProductBindingResult.hasErrors()) {
+            model.addAttribute("lstCategory", this.categoryService.getAllByDelete(false));
+            return "admin/product/update";
+        }
         Product currentProduct = this.productService.getProductById(product.getId()).get();
         if (currentProduct != null) {
             if (!file.isEmpty()) {
@@ -123,7 +132,7 @@ public class ProductController {
             currentProduct.setName(product.getName());
             currentProduct.setPrice(product.getPrice());
             currentProduct.setDescription(product.getDescription());
-            currentProduct.setCategory(this.productService.getCategoryByName(product.getCategory().getName()));
+            currentProduct.setCategory(this.categoryService.findCategoryByName(product.getCategory().getName()));
             currentProduct.setDiscount(product.getDiscount());
             currentProduct.setMaterial(product.getMaterial());
             currentProduct.setQuantity(product.getQuantity());
@@ -145,7 +154,10 @@ public class ProductController {
     @PostMapping("/admin/product/delete")
     public String postDeleteProduct(Model model, @ModelAttribute("newProduct") Product product) {
         // TODO: process POST request
-        this.productService.deleteProductById(product.getId());
+        // this.productService.deleteProductById(product.getId());
+        Product p = this.productService.getProductById(product.getId()).get();
+        p.setDeleted(true);
+        this.productService.handleSaveProduct(p);
         return "redirect:/admin/product";
     }
 
