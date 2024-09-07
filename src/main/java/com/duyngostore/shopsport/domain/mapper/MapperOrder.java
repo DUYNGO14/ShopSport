@@ -17,6 +17,7 @@ public class MapperOrder {
     public Order orderDTOtoOrder(OrderDTO orderDTO) {
         Order order = new Order();
         order.setFull_name(orderDTO.getReceive_FullName());
+        String address = orderDTO.getPhuongXa() + "/" + orderDTO.getQuanHuyen() + "/" + orderDTO.getTinhThanh();
         order.setAddress(orderDTO.getReceive_Address());
         order.setPhone_number(orderDTO.getReceive_PhoneNumber());
         return order;

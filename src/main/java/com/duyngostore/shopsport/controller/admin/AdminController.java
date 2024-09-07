@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.duyngostore.shopsport.domain.Feedback;
 import com.duyngostore.shopsport.domain.User;
+import com.duyngostore.shopsport.service.FeedbackService;
 import com.duyngostore.shopsport.service.OrderService;
 import com.duyngostore.shopsport.service.ProductService;
 import com.duyngostore.shopsport.service.UploadService;
@@ -37,14 +39,16 @@ public class AdminController {
     private final PasswordEncoder passwordEncoder;
     private final ProductService productService;
     private final OrderService orderService;
+    private final FeedbackService feedbackService;
 
     public AdminController(UserService userService, UploadService uploadService, PasswordEncoder passwordEncoder,
-            ProductService productService, OrderService orderService) {
+            ProductService productService, OrderService orderService, FeedbackService feedbackService) {
         this.userService = userService;
         this.uploadService = uploadService;
         this.passwordEncoder = passwordEncoder;
         this.productService = productService;
         this.orderService = orderService;
+        this.feedbackService = feedbackService;
     }
 
     @GetMapping("/admin")
@@ -171,6 +175,28 @@ public class AdminController {
     public String postDeleteUser(Model model, @ModelAttribute("newUser") User user) {
         this.userService.deleteById(user.getId());
         return "redirect:/admin/user";
+    }
+
+    // feedback
+    @GetMapping("/admin/feedback")
+    public String getFeedback(Model model, @RequestParam("page") Optional<String> pageOptional) {
+        int page = 1;
+        try {
+            if (pageOptional.isPresent()) {
+                page = Integer.parseInt(pageOptional.get());
+            } else {
+
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        Pageable pageable = PageRequest.of(0, 12);
+        Page<Feedback> prs = this.feedbackService.getAll(pageable);
+        List<Feedback> lstFeedbacks = prs.getContent();
+        model.addAttribute("lstFeedbacks", lstFeedbacks);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", prs.getTotalPages() == 0 ? 1 : prs.getTotalPages());
+        return "admin/feedback/show";
     }
 
 }

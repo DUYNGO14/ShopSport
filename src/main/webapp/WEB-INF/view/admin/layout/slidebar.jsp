@@ -69,6 +69,11 @@
                             </li>
                         </ul>
                     </li>
+                    <li class="sidebar-item">
+
+                        <a href="/admin/feedback" class="sidebar-link"><i class="fa-regular fa-comments"></i> Show
+                            Feedback</a>
+                    </li>
                     <li class="sidebar-header">
                         Multi Level Menu
                     </li>

@@ -46,7 +46,6 @@
                             <fmt:formatNumber type="number" value="${product.price}" /> đ
                         </h2>
                         <select name="size" id="mySelect">
-                            <option>Select Size</option>
                             <option value="X">X</option>
                             <option value="M">M</option>
                             <option value="L">L</option>

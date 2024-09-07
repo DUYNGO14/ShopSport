@@ -9,6 +9,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -63,13 +64,13 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<Size> sizes;
     // feedback
-    @OneToMany(mappedBy = "product")
-    private List<Ratings> list_feedback;
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    private List<Feedback> list_feedback;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<OrderDetail> list_orderdetail;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<CartDetail> lstCartDetail;
 
 }

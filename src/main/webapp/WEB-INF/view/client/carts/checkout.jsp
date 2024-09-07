@@ -12,6 +12,46 @@
                     <title>Thanh toán</title>
                     <!-- <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" /> -->
                     <jsp:include page="../layout_client/head.jsp" />
+                    <script src="https://esgoo.net/scripts/jquery.js"></script>
+                    <script>
+                        $(document).ready(function () {
+                            //Lấy tỉnh thành
+                            $.getJSON('https://esgoo.net/api-tinhthanh/1/0.htm', function (data_tinh) {
+                                if (data_tinh.error == 0) {
+                                    $.each(data_tinh.data, function (key_tinh, val_tinh) {
+                                        $("#tinh").append('<option value="' + val_tinh.id + '">' + val_tinh.full_name + '</option>');
+                                    });
+                                    $("#tinh").change(function (e) {
+                                        var idtinh = $(this).val();
+                                        //Lấy quận huyện
+                                        $.getJSON('https://esgoo.net/api-tinhthanh/2/' + idtinh + '.htm', function (data_quan) {
+                                            if (data_quan.error == 0) {
+                                                $("#quan").html('<option value="0">Quận Huyện</option>');
+                                                $("#phuong").html('<option value="0">Phường Xã</option>');
+                                                $.each(data_quan.data, function (key_quan, val_quan) {
+                                                    $("#quan").append('<option value="' + val_quan.id + '">' + val_quan.full_name + '</option>');
+                                                });
+                                                //Lấy phường xã  
+                                                $("#quan").change(function (e) {
+                                                    var idquan = $(this).val();
+                                                    $.getJSON('https://esgoo.net/api-tinhthanh/3/' + idquan + '.htm', function (data_phuong) {
+                                                        if (data_phuong.error == 0) {
+                                                            $("#phuong").html('<option value="0">Phường Xã</option>');
+                                                            $.each(data_phuong.data, function (key_phuong, val_phuong) {
+                                                                $("#phuong").append('<option value="' + val_phuong.id + '">' + val_phuong.full_name + '</option>');
+                                                            });
+                                                        }
+                                                    });
+                                                });
+
+                                            }
+                                        });
+                                    });
+
+                                }
+                            });
+                        });	    
+                    </script>
                 </head>
 
                 <body>
@@ -25,13 +65,14 @@
                         <table width="100%">
                             <thead>
                                 <tr>
-                                    <td>Selection</td>
-                                    <td>Image</td>
-                                    <td>Product</td>
-                                    <td>Price</td>
-                                    <td>Quantity</td>
-                                    <td>Subtotal</td>
-                                    <td>Remove</td>
+                                    <td scope="col">Selection</td>
+                                    <td scope="col">Image</td>
+                                    <td scope="col">Product</td>
+                                    <td scope="col">Size</td>
+                                    <td scope="col">Price</td>
+                                    <td scope="col">Quantity</td>
+                                    <td scope="col">Subtotal</td>
+                                    <td scope="col">Remove</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -41,9 +82,11 @@
                                         <td><img src="/images/product/${cartDetail.product.image}" alt=""></td>
                                         <td> <a href="/sproduct/${cartDetail.product.id}"
                                                 target="_blank">${cartDetail.product.name}</a></td>
+                                        <td>${cartDetail.size}</td>
                                         <td>
                                             <fmt:formatNumber type="number" value="${cartDetail.price}" /> đ
                                         </td>
+
                                         <td>
                                             ${cartDetail.quantity}
                                         </td>
@@ -97,6 +140,28 @@
                                             class="form-control ${not empty errorAddress ? 'is-invalid' : ''}"
                                             id="exampleInputPassword1" path="receive_Address" />
                                         ${errorAddress}
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="row">
+                                            <div class="col-md-4 col-12 mx-auto mb-3">
+                                                <form:select class="form-select" id="tinh" title="Chọn Tỉnh Thành"
+                                                    path="tinhThanh">
+                                                    <option value="0">Tỉnh Thành</option>
+                                                </form:select>
+                                            </div>
+                                            <div class="col-md-4 col-12 mx-auto mb-3">
+                                                <form:select class="form-select" id="quan" title="Chọn Quận Huyện"
+                                                    path="quanHuyen">
+                                                    <option value="0">Quận Huyện</option>
+                                                </form:select>
+                                            </div>
+                                            <div class="col-md-4 col-12 mx-auto mb-3">
+                                                <form:select class="form-select" id="phuong" title="Chọn Phường Xã"
+                                                    path="phuongXa">
+                                                    <option value="0">Phường Xã</option>
+                                                </form:select>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="col-12 mb-3">
                                         <label for="exampleInputPassword1" class="form-label">Phone Number:</label>

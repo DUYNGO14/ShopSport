@@ -22,7 +22,7 @@
                             <a href="/cart">
                                 <i class="fa-solid fa-bag-shopping"></i>
                                 <span
-                                    class="position-absolute rounded-circle d-flex align-items-center bg-danger justify-content-center px-1"
+                                    class="position-absolute rounded-circle d-flex align-items-center bg-danger justify-content-center px-1 "
                                     style="top: -5px; left: 25px; height: 10px; min-width: 10px;" id="sumCart">
                                     ${sessionScope.sum}
                                 </span>
@@ -43,11 +43,6 @@
                                 </span>
                             </a>
                         </li>
-                        <!-- <li class="nav-item dropdown">
-                            <a id="login" class=" dropdown-toggle" href="#">
-                                <c:out value="${sessionScope.username}" />
-                            </a>
-                        </li> -->
                         <li class="nav-item dropdown">
                             <a class=" dropdown-toggle navbar-link " href="#" id="navbarDarkDropdownMenuLink"
                                 data-bs-toggle="dropdown" aria-expanded="false">
@@ -55,7 +50,7 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink"
                                 style="background-color: #e3e6f3;">
-                                <li><a href="#">My Account</a></li>
+                                <li><a href="/myaccount">My Account</a></li>
                                 <li><a href="/history_order">History order</a></li>
                                 <li>
                                     <form method="post" action="/logout">
