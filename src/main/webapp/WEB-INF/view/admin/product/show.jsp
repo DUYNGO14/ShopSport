@@ -35,23 +35,20 @@
                                 <!-- Table Element -->
                                 <div class="card border-0">
                                     <div class="card-header">
-                                        <h5 class="card-title">
-                                            Basic Table
-                                        </h5>
                                         <a href="/admin/product/create" class="btn btn-success">Create Product</a>
                                     </div>
                                     <div class="card-body">
                                         <table class=" table table-bordered table-hover">
                                             <thead>
                                                 <tr>
-                                                    <th>ID</th>
-                                                    <th>Name Product</th>
-                                                    <th>Quantity</th>
-                                                    <th>Price</th>
-                                                    <th>Material</th>
-                                                    <th>Image</th>
-                                                    <th>IsDelete</th>
-                                                    <th>Action</th>
+                                                    <th class="col">ID</th>
+                                                    <th class="col">Name Product</th>
+                                                    <th class="col">Quantity</th>
+                                                    <th class="col">Price</th>
+                                                    <th class="col">Material</th>
+                                                    <th class="col">Image</th>
+                                                    <th class="col">IsDelete</th>
+                                                    <th class="col">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -59,19 +56,43 @@
                                                     <tr>
                                                         <th>${product.id}</th>
                                                         <td>${product.name}</td>
-                                                        <td>${product.quantity}</td>
+                                                        <td>
+                                                            <c:choose>
+                                                                <c:when test="${product.quantity==0}"><span
+                                                                        class="text-danger">Hết hàng!</span></c:when>
+                                                                <c:when test="${product.quantity<=10}"><span
+                                                                        class="text-danger">${product.quantity} (Sắp hết
+                                                                        hàng!)</span>
+                                                                </c:when>
+                                                                <c:otherwise>${product.quantity}</c:otherwise>
+                                                            </c:choose>
+
+                                                        </td>
                                                         <td>${product.price}</td>
                                                         <td>${product.material}</td>
                                                         <td><img src="/images/product/${product.image}" alt=""
                                                                 style="max-width: 100px; max-height: 120px;"></td>
-                                                        <td>${product.deleted}</td>
+                                                        <td>
+                                                            <c:choose>
+                                                                <c:when test=" ${product.deleted==true}"><span><i
+                                                                            class="fa-solid fa-circle-check"
+                                                                            style="color: #63E6BE;"></i></span>
+                                                                </c:when>
+                                                                <c:otherwise><i class="fa-solid fa-circle-check"
+                                                                        style="color: #63E6BE;"></i></i>
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </td>
                                                         <td>
                                                             <a href="/admin/product/${product.id}"
-                                                                class="btn btn-success btn-sm">View</a>
+                                                                class="btn btn-success btn-sm"><i
+                                                                    class="fa-regular fa-eye"></i></a>
                                                             <a href="/admin/product/update/${product.id}"
-                                                                class="btn btn-warning  btn-sm mx-2">Update</a>
+                                                                class="btn btn-warning  btn-sm mx-2"><i
+                                                                    class="fa-solid fa-pen-to-square"></i></a>
                                                             <a href="/admin/product/delete/${product.id}"
-                                                                class="btn btn-danger btn-sm">Delete</a>
+                                                                class="btn btn-danger btn-sm"><i
+                                                                    class="fa-solid fa-trash-can"></i></a>
                                                         </td>
                                                     </tr>
 

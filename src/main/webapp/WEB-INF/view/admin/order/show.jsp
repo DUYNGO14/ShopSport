@@ -73,11 +73,14 @@
                                                         <td>${order.status}</td>
                                                         <td>
                                                             <a href="/admin/order/view/${order.id}"
-                                                                class="btn btn-success">View</a>
+                                                                class="btn btn-success"><i
+                                                                    class="fa-regular fa-eye"></i></a>
                                                             <a href="/admin/order/update/${order.id}"
-                                                                class="btn btn-warning  mx-2">Update</a>
+                                                                class="btn btn-warning  mx-2"><i
+                                                                    class="fa-solid fa-pen-to-square"></i></a>
                                                             <a href="/admin/order/delete/${order.id}"
-                                                                class="btn btn-danger">Delete</a>
+                                                                class="btn btn-danger"><i class="fa-solid fa-trash-can">
+                                                                    </i< /a>
                                                         </td>
                                                     </tr>
 

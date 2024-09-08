@@ -54,12 +54,25 @@
                                                         <th>${category.id}</th>
                                                         <td>${category.name}</td>
                                                         <td>${category.description}</td>
-                                                        <td>${category.deleted}</td>
+                                                        <td>
+                                                            <c:choose>
+                                                                <c:when test=" ${category.deleted==true}"><span
+                                                                        class="text-success"><i
+                                                                            class="fa-solid fa-circle-check"
+                                                                            style="color: #63E6BE;"></i></span>
+                                                                </c:when>
+                                                                <c:otherwise><i class="fa-solid fa-circle-check"
+                                                                        style="color: #63E6BE;"></i>
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </td>
                                                         <td>
                                                             <a href="/admin/category/update/${category.id}"
-                                                                class="btn btn-warning  btn-sm mx-2">Update</a>
+                                                                class="btn btn-warning  btn-sm mx-2"><i
+                                                                    class="fa-solid fa-pen-to-square"></i></a>
                                                             <a href="/admin/category/delete/${category.id}"
-                                                                class="btn btn-danger btn-sm">Delete</a>
+                                                                class="btn btn-danger btn-sm"><i
+                                                                    class="fa-solid fa-trash-can"></i></a>
 
                                                         </td>
                                                     </tr>

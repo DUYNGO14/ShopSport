@@ -16,9 +16,7 @@
             <body>
                 <jsp:include page="../layout_client/header.jsp" />
                 <section id="page-header" class="blog-header"
-                    style="background-image: url(/images/client/img/banner/b19.jpg);;">
-                    <h2>#Blog</h2>
-                    <p>Read all case studies about our products!</p>
+                    style="background-image: url(/images/client/img/banner/banner2.png);;">
                 </section>
                 <section id="blog">
                     <div class="blog-box">

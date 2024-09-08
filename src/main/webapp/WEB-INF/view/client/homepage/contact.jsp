@@ -16,9 +16,8 @@
             <body>
                 <jsp:include page="../layout_client/header.jsp" />
                 <section id="page-header" class="about-header"
-                    style="background-image: url(/images/client/img/about/banner.png);">
-                    <h2>#Contact</h2>
-                    <p>RLorem ipsum dolor sit amet consectetur!</p>
+                    style="background-image: url(/images/client/img/banner/banner2.png);">
+
                 </section>
                 <section id="contact-details" class="section-p1">
                     <div class="details">

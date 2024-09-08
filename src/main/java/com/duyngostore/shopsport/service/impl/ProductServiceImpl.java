@@ -105,8 +105,10 @@ public class ProductServiceImpl implements ProductService {
             Optional<Product> producOptional = this.productRepository.findById(productId);
             if (producOptional.isPresent()) {
                 Product realProduct = producOptional.get();
-                CartDetail oldCartDetail = this.cartDetailRepository.findByCartAndProduct(cart, realProduct);
-
+                // CartDetail oldCartDetail =
+                // this.cartDetailRepository.findByCartAndProduct(cart, realProduct);
+                CartDetail oldCartDetail = this.cartDetailRepository.findByCartAndProductAndSize(cart, realProduct,
+                        size);
                 if (oldCartDetail == null) {
                     CartDetail cd = new CartDetail();
                     cd.setCart(cart);
@@ -195,7 +197,7 @@ public class ProductServiceImpl implements ProductService {
                     orderDetail.setProduct(cd.getProduct());
                     orderDetail.setPrice(cd.getPrice());
                     orderDetail.setQuantity(cd.getQuantity());
-
+                    orderDetail.setSize(cd.getSize());
                     this.orderDetailRepository.save(orderDetail);
                 }
 

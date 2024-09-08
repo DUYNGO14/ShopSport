@@ -69,12 +69,14 @@
                                                         <td>${user.address}</td>
                                                         <td>${user.role.name}</td>
                                                         <td>
-                                                            <a href="/admin/user/${user.id}"
-                                                                class="btn btn-success">View</a>
+                                                            <a href="/admin/user/${user.id}" class="btn btn-success"><i
+                                                                    class="fa-regular fa-eye"></i></a>
                                                             <a href="/admin/user/update/${user.id}"
-                                                                class="btn btn-warning  mx-2">Update</a>
+                                                                class="btn btn-warning  mx-2"><i
+                                                                    class="fa-solid fa-pen-to-square"></i></a>
                                                             <a href="/admin/user/delete/${user.id}"
-                                                                class="btn btn-danger">Delete</a>
+                                                                class="btn btn-danger"><i
+                                                                    class="fa-solid fa-trash-can"></i></a>
                                                         </td>
                                                     </tr>
 

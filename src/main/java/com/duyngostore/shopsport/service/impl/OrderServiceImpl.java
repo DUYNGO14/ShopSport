@@ -9,19 +9,24 @@ import org.springframework.stereotype.Service;
 
 import com.duyngostore.shopsport.domain.Order;
 import com.duyngostore.shopsport.domain.OrderDetail;
+import com.duyngostore.shopsport.domain.Product;
 import com.duyngostore.shopsport.domain.User;
 import com.duyngostore.shopsport.reppository.OrderDetailRepository;
 import com.duyngostore.shopsport.reppository.OrderRepository;
+import com.duyngostore.shopsport.reppository.ProductRepository;
 import com.duyngostore.shopsport.service.OrderService;
 
 @Service
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final OrderDetailRepository orderDetailRepository;
+    private final ProductRepository productRepository;
 
-    public OrderServiceImpl(OrderRepository orderRepository, OrderDetailRepository orderDetailRepository) {
+    public OrderServiceImpl(OrderRepository orderRepository, OrderDetailRepository orderDetailRepository,
+            ProductRepository productRepository) {
         this.orderRepository = orderRepository;
         this.orderDetailRepository = orderDetailRepository;
+        this.productRepository = productRepository;
     }
 
     @Override
@@ -58,8 +63,24 @@ public class OrderServiceImpl implements OrderService {
         if (orderOptional.isPresent()) {
             Order currentOrder = orderOptional.get();
             currentOrder.setStatus(order.getStatus());
+            List<OrderDetail> orderDetails = this.orderDetailRepository.findByOrder(currentOrder);
+            if (order.getStatus().name().equals("CONFIRM")) {
+                for (OrderDetail orderDetail : orderDetails) {
+                    Product product = this.productRepository.findById(orderDetail.getProduct().getId()).get();
+                    product.setQuantity(product.getQuantity() - orderDetail.getQuantity());
+                    this.productRepository.save(product);
+                }
+            }
+            if (order.getStatus().name().equals("CANCELLED")) {
+                for (OrderDetail orderDetail : orderDetails) {
+                    Product product = this.productRepository.findById(orderDetail.getProduct().getId()).get();
+                    product.setQuantity(product.getQuantity() + orderDetail.getQuantity());
+                    this.productRepository.save(product);
+                }
+            }
             this.orderRepository.save(currentOrder);
         }
+
     }
 
     @Override

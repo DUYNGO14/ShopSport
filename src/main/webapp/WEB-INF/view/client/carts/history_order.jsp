@@ -73,6 +73,9 @@
                                                 <c:if test="${order.status == 'PENDING'}">Chờ xác nhận đơn hàng |
                                                     <span class="text-primary">${order.status}</span>
                                                 </c:if>
+                                                <c:if test="${order.status == 'CONFIRM'}">Đơn hàng đã được xác nhận |
+                                                    <span class="text-info">${order.status}</span>
+                                                </c:if>
                                                 <c:if test="${order.status == 'SHIPPING'}">Đơn hàng đang được vận chuyển
                                                     | <span class="text-warning">${order.status}</span></c:if>
                                                 <c:if test="${order.status == 'COMPLETE'}">Giao hàng thành công |

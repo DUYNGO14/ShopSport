@@ -17,31 +17,9 @@
                 <jsp:include page="../layout_client/header.jsp" />
                 <section id="page-header" class="about-header"
                     style="background-image: url(/images/client/img/banner/banner2.png);">
-                    <h2>#About</h2>
-                    <p>RLorem ipsum dolor sit amet consectetur!</p>
+
                 </section>
-                <!-- <section id="about-header" class="section-p1">
-                    <img src="/images/client/img/banner/banner2.png" alt="">
-                    <div>
-                        <h2>Who Are You?</h2>
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Totam praesentium consectetur
-                            aspernatur natus
-                            saepe, reprehenderit iusto aperiam ea amet voluptatum repellendus porro repellat nulla vel
-                            architecto
-                            error
-                            laudantium delectus optio.</p>
-                        <abbr title="">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.consectetur adipisicing elit.
-                        </abbr>
-                        <br></br>
-                        <marquee loop="-1" width="100%" behavior="70%" direction="">Lorem ipsum dolor sit
-                            amet
-                            consectetur
-                            adipisicing elit.Dicta velitlabore
-                            eos ex hic possimus quaerat at qui laboriosam quisquam, dolores excepturi. Incidunt
-                        </marquee>
-                    </div>
-                </section> -->
+
                 <section class="page section-p1">
                     <div class="container">
                         <div class="row">
