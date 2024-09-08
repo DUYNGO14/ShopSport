@@ -17,7 +17,6 @@ import com.duyngostore.shopsport.service.EmailService;
 import com.duyngostore.shopsport.service.UserService;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Email;
 
 @Controller
 public class AuthController {

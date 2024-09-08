@@ -18,11 +18,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.duyngostore.shopsport.domain.Cart;
 import com.duyngostore.shopsport.domain.CartDetail;
+import com.duyngostore.shopsport.domain.Feedback;
 import com.duyngostore.shopsport.domain.Product;
 import com.duyngostore.shopsport.domain.Product_;
 import com.duyngostore.shopsport.domain.User;
 import com.duyngostore.shopsport.domain.dto.ProductCriterioDTO;
-
+import com.duyngostore.shopsport.service.FeedbackService;
 import com.duyngostore.shopsport.service.ProductService;
 import com.duyngostore.shopsport.service.UserService;
 
@@ -34,10 +35,12 @@ public class UserController {
 
     private final UserService userService;
     private final ProductService productService;
+    private final FeedbackService feedbackService;
 
-    public UserController(UserService userService, ProductService productService) {
+    public UserController(UserService userService, ProductService productService, FeedbackService feedbackService) {
         this.userService = userService;
         this.productService = productService;
+        this.feedbackService = feedbackService;
 
     }
 
@@ -134,17 +137,15 @@ public class UserController {
 
     @GetMapping("/sproduct/{id}")
     public String getDetailProduct(Model model, @PathVariable long id) {
-        model.addAttribute("product", this.productService.getProductById(id).get());
-        model.addAttribute("lstProduct", this.productService.getAllProduct());
+        Product p = this.productService.getProductById(id).get();
+        model.addAttribute("product", p);
+        Pageable pageable = PageRequest.of(0, 8);
+        Page<Product> prs = this.productService.getAllProduct(pageable);
+        List<Product> products = prs.getContent();
+        model.addAttribute("lstProduct", products);
+        List<Feedback> listFeedbacks = p.getList_feedback();
+        model.addAttribute("lstFeedback", listFeedbacks);
+        model.addAttribute("size", listFeedbacks.size());
         return "client/products/sproduct";
     }
-
-    // @GetMapping("/search")
-    // public String getProductbyKeySearch(Model model, @Param("keySearch") String
-    // keySearch) {
-    // List<Product> listproduct = this.productService.searchProduct(keySearch);
-    // model.addAttribute("keySearch", keySearch);
-    // model.addAttribute("lstProduct", listproduct);
-    // return "redirect:/shop";
-    // }
 }

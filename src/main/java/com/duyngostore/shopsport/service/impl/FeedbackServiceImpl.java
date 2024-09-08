@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.duyngostore.shopsport.domain.Feedback;
+import com.duyngostore.shopsport.domain.Product;
 import com.duyngostore.shopsport.reppository.FeedbackRepository;
 import com.duyngostore.shopsport.service.FeedbackService;
 
@@ -37,6 +38,15 @@ public class FeedbackServiceImpl implements FeedbackService {
     @Override
     public Feedback save(Feedback feedback) {
         return this.feedbackRepository.save(feedback);
+    }
+
+    @Override
+    public List<Feedback> getFeedbacksByProduct(Product product) {
+        Optional<List<Feedback>> feedbacksOptional = this.feedbackRepository.findByProduct(product);
+        if (feedbacksOptional.isPresent()) {
+            return feedbacksOptional.get();
+        }
+        return null;
     }
 
 }

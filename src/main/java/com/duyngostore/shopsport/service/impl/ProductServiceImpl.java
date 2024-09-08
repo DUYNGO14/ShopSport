@@ -238,7 +238,7 @@ public class ProductServiceImpl implements ProductService {
     public Page<Product> fetchProductsWithSpec(Pageable page, ProductCriterioDTO productCriteriaDTO) {
         Specification<Product> combinedSpec = Specification.where(null);
         if (productCriteriaDTO.getFactory() == null &&
-                productCriteriaDTO.getCategory() == null && productCriteriaDTO.getKeySearch() == null) {
+                productCriteriaDTO.getCategory() == null) {
             return this.productRepository.findAll(page);
         }
         if (productCriteriaDTO.getFactory() != null && productCriteriaDTO.getFactory().isPresent()) {
@@ -251,10 +251,7 @@ public class ProductServiceImpl implements ProductService {
                     .findProductByCategory(productCriteriaDTO.getCategory().get());
             combinedSpec = combinedSpec.and(currentSpec);
         }
-        if (productCriteriaDTO.getKeySearch() != null && productCriteriaDTO.getKeySearch().isPresent()) {
-            Specification<Product> currentSpec = ProductSpecification.nameLike(productCriteriaDTO.getKeySearch().get());
-            combinedSpec = combinedSpec.and(currentSpec);
-        }
+
         return this.productRepository.findAll(combinedSpec, page);
     }
 }

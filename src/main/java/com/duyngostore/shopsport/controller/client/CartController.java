@@ -120,12 +120,11 @@ public class CartController {
         currentUser.setId(id);
 
         this.productService.handlePlaceOrder(currentUser, session, order);
-        // String subject = "Thư cảm ơn từ shopsport";
-        // String content = "<h3>Cảm ơn bạn" + fullname + " đã tin tưởng đặt hàng Shop
-        // sport!</h3>7\n"
-        // + "<h4>Đơn hàng sẽ được giao đến bạn sớm nhất có thể </h4>/n"
-        // + "<strong>Cảm ơn!</strong>";
-        // this.emailService.sendEmailSync(email, subject, content, false, true);
+        String subject = "Thư cảm ơn từ shopsport";
+        String content = "<h3>Cảm ơn bạn" + fullname + " đã tin tưởng đặt hàng Shop sport!</h3>\n"
+                + "<h4>Đơn hàng sẽ được giao đến bạn sớm nhất có thể </h4>/n"
+                + "<strong>Cảm ơn!</strong>";
+        this.emailService.sendEmailSync(email, subject, content, false, true);
         return "client/carts/thank";
     }
 

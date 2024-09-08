@@ -8,8 +8,8 @@
                 <meta charset="UTF-8">
                 <meta http-equiv="X-UA-Compatible" content="IE=edge">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>Tech2etc Ecommerce Tutorial</title>
-                <!-- <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" /> -->
+                <title>Shop sport</title>
+                <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
                 <jsp:include page="../layout_client/head.jsp" />
             </head>
 
@@ -92,6 +92,38 @@
                         <h4>Product Details</h4>
                         ${product.description}
                         <span>Material: ${product.material}</span>
+                    </div>
+                </section>
+                <section class="section-p1">
+                    <div class="alert alert-info" role="alert">
+                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                            Đánh giá sản phẩm
+                        </button>
+                    </div>
+                    <div class="collapse" id="collapseExample">
+                        <div class="card card-body">
+                            <c:choose>
+                                <c:when test=" ${size!=0}">
+                                    <c:forEach var="feedback" items="${lstFeedback}">
+                                        <button type="button" class="btn btn-dark position-relative">
+                                            ${feedback.user.full_name} <svg width="1em" height="1em" viewBox="0 0 16 16"
+                                                class="position-absolute top-100 start-50 translate-middle mt-1 bi bi-caret-down-fill"
+                                                fill="#212529" xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                                            </svg>
+                                        </button>
+                                        <p>${feedback.content}</p>
+                                    </c:forEach>
+                                </c:when>
+                                <c:otherwise>
+                                    <span>Hiện tại sản phẩm chưa có đánh giá nào, bạn hãy trở thành người đầu tiên đánh
+                                        giá
+                                        cho sản phẩm này</span>
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
                     </div>
                 </section>
                 <section id="about-header" class="section-p1">
