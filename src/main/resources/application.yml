@@ -1,0 +1,36 @@
+spring:
+    application:
+        name: shopsport
+    datasource:
+        url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/db_webbanhang
+        username: root
+        password: 123456
+        driver-class-name: com.mysql.cj.jdbc.Driver
+    jpa:
+        hibernate: 
+            ddl-auto: update
+        show-sql: true
+    servlet:
+        multipart.max-file-size: 50MB
+        multipart.max-request-size: 50MB
+    session:
+        store-type: jdbc
+        timeout: 30m
+        jdbc:
+            initialize-schema: always
+    mail:
+        host: smtp.gmail.com
+        port: 587
+        username: ngoduy07142003@gmail.com
+        password: kohpobgklfcqyisg
+        properties:
+            mail:
+                smtp:
+                    auth: true
+                    starttls:
+                        enable: true
+logging:
+    level:
+        org:
+            springframework:
+                security: DEBUG
